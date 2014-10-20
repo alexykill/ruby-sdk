@@ -32,7 +32,7 @@ TODO: Write usage instructions here
 
 ## TODO
 - Fix style (https://github.com/bbatsov/ruby-style-guide#naming)
-- Add unit testing
+- ~~Add unit testing~~
 - Document, document, document
 - Review naming and organization (with respect to Java & Python?)
 - Review `gem` build infraestructure (http://www.smashingmagazine.com/2014/04/08/how-to-build-a-ruby-gem-with-bundler-test-driven-development-travis-ci-and-coveralls-oh-my/)

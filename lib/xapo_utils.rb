@@ -6,7 +6,7 @@ module XapoUtils
     module_function
             
     def encrypt(payload, secret)
-        cipher = OpenSSL::Cipher::AES.new('256-ECB')
+        cipher = OpenSSL::Cipher::AES.new("256-ECB")
         cipher.encrypt
         cipher.key = secret        
 

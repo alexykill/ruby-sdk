@@ -3,16 +3,16 @@ require "xapo_utils"
 
 require "json"
 require "uri"
-require 'yaml'
+require "yaml"
 
 module XapoTools
 
     module_function 
 
     def micro_payment_config
-        return Hash[:sender_user_id => '', :sender_user_email => '', 
-                    :sender_user_cellphone => '', :receiver_user_id => '', 
-                    :receiver_user_email => '', :pay_object_id => '', 
+        return Hash[:sender_user_id => "", :sender_user_email => "", 
+                    :sender_user_cellphone => "", :receiver_user_id => "", 
+                    :receiver_user_email => "", :pay_object_id => "", 
                     :amount_BIT => 0, :timestamp => XapoUtils.timestamp]
     end
 
@@ -42,7 +42,6 @@ module XapoTools
 
             snippet = YAML::load(<<-END)
             |
-
                 <iframe id="tipButtonFrame" scrolling="no" frameborder="0"
                     style="border:none; overflow:hidden; height:22px;"
                     allowTransparency="true" src="#{widget_url}">
@@ -57,7 +56,6 @@ module XapoTools
 
             snippet = YAML::load(<<-END)
             |
-
                 <div id="tipButtonDiv" class="tipButtonDiv"></div>
                 <div id="tipButtonPopup" class="tipButtonPopup"></div>
                 <script>
