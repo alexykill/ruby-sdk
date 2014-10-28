@@ -11,33 +11,35 @@ class TestXapoTools < Minitest::Test
 
     def test_build_iframe_widget()
         config = XapoTools.micro_payment_config
-        config["sender_user_email"] = "sender@xapo.com"
-        config["sender_user_cellphone"] = "+5491112341234"
-        config["receiver_user_id"] = "r0210"
-        config["receiver_user_email"] = "fernando.taboada@xapo.com"
-        config["pay_object_id"] = "to0210"
-        config["amount_BIT"] = 0.01
+        config[:sender_user_email] = "sender@xapo.com"
+        config[:sender_user_cellphone] = "+5491112341234"
+        config[:receiver_user_id] = "r0210"
+        config[:receiver_user_email] = "fernando.taboada@xapo.com"
+        config[:pay_object_id] = "to0210"
+        config[:amount_BIT] = 0.01
+        config[:pay_type] = PayType::DONATE
 
-        actual = @xapo_tools.build_iframe_widget(config, PayType::DONATE)
+        actual = @xapo_tools.build_iframe_widget(config)
 
         assert_match(/<iframe(.*)>(.*)<\/iframe>\n/m, actual)
     end
 
     def test_build_div_widget()
         config = XapoTools.micro_payment_config
-        config["sender_user_email"] = "sender@xapo.com"
-        config["sender_user_cellphone"] = "+5491112341234"
-        config["receiver_user_id"] = "r0210"
-        config["receiver_user_email"] = "fernando.taboada@xapo.com"
-        config["pay_object_id"] = "to0210"
-        config["amount_BIT"] = 0.01
+        config[:sender_user_email] = "sender@xapo.com"
+        config[:sender_user_cellphone] = "+5491112341234"
+        config[:receiver_user_id] = "r0210"
+        config[:receiver_user_email] = "fernando.taboada@xapo.com"
+        config[:pay_object_id] = "to0210"
+        config[:amount_BIT] = 0.01
+        config[:pay_type] = PayType::TIP
         regex = /
                     <div\sid="tipButtonDiv"\sclass="tipButtonDiv"><\/div>\n
                     <div\sid="tipButtonPopup"\sclass="tipButtonPopup"><\/div>\n
                     <script>(.*)<\/script>\n
                 /mx
 
-        actual = @xapo_tools.build_div_widget(config, PayType::TIP)
+        actual = @xapo_tools.build_div_widget(config)
 
         assert_match(regex, actual)
     end

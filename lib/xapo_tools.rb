@@ -13,7 +13,8 @@ module XapoTools
         return Hash[:sender_user_id => "", :sender_user_email => "", 
                     :sender_user_cellphone => "", :receiver_user_id => "", 
                     :receiver_user_email => "", :pay_object_id => "", 
-                    :amount_BIT => 0, :timestamp => XapoUtils.timestamp]
+                    :amount_BIT => 0, :timestamp => XapoUtils.timestamp, 
+                    :pay_type => ""]
     end
 
     class MicroPayment
@@ -23,22 +24,22 @@ module XapoTools
             @app_secret = app_secret
         end
 
-        def build_url(config, pay_type)
+        def build_url(config)
             json_config = JSON.generate(config)
             encrypted_config = XapoUtils.encrypt(json_config, @app_secret)
 
             query_str = URI.encode_www_form(
                 "app_id" => @app_id, 
                 "button_request" => encrypted_config,
-                "customization" => JSON.generate({"button_text" => pay_type}))
+                "customization" => JSON.generate({"button_text" => config[:pay_type]}))
 
             widget_url = @service_url + "?" + query_str
 
             return widget_url
         end
 
-        def build_iframe_widget(config, pay_type)
-            widget_url = build_url(config, pay_type)
+        def build_iframe_widget(config)
+            widget_url = build_url(config)
 
             snippet = YAML::load(<<-END)
             |
@@ -51,8 +52,8 @@ module XapoTools
             return snippet
         end
 
-        def build_div_widget(config, pay_type)
-            widget_url = build_url(config, pay_type)
+        def build_div_widget(config)
+            widget_url = build_url(config)
 
             snippet = YAML::load(<<-END)
             |
