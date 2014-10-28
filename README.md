@@ -1,6 +1,19 @@
 # README
 
->This is the Ruby version of the Xapo's Widget Tools. These tools allow you (Third Party Application, TPA) to easily embed tools like Payments Buttons, Donation Buttons and other kind of widgets as DIV or iFrame into your web application using your language of choice. In this way, tedious details like encryption and HTML snippet generation are handled for you in a simple and transparent way.   
+>This is the Ruby version of the Xapo's Widget Tools. These tools allow you (Third Party Application, TPA) to easily embed tools like Payments Buttons, Donation Buttons and other kind of widgets as DIV or iFrame into your web application using your language of choice. In this way, tedious details like encryption and HTML snippet generation are handled for you in a simple and transparent way.  
+
+---
+
+# Table of Contents
+
+- [Build](#build)
+- [Installation](#installation)
+- [Micro Payment Widgets](#micro-payment-widgets)
+    - [IFrame Widget](#iframe-widget)
+    - [Div Widget](#div-widget)
+    - [Widgets Gallery](#widgets-gallery)
+- [Contributing](#contributing)
+- [TODO](#todo) 
 
 ## Build
 
@@ -45,29 +58,26 @@ Micro payment widgets allow to dynamically get a HTML snippet pre-configured and
 - **Pay type:** `[optional]` any of Donate | Pay | Tip | Deposit.
 
 ### IFrame Widget
-```java
-import com.xapo.tools.widgets.MicroPayment;
-import com.xapo.tools.widgets.MicroPaymentConfig;
+```ruby
+require 'xapo_tools'
 
 ...
 
-microPayment = new MicroPayment(XAPO_URL,
-                                APP_ID, APP_SECRET);
+micro_payment = XapoTools::MicroPayment.new(
+            XAPO_URL, 
+            APP_ID, 
+            APP_SECRET)
+config = XapoTools.micro_payment_config
 
-config = new WidgetConfig();
+config[:sender_user_email] = "sender@xapo.com"
+config[:sender_user_cellphone] = "+5491112341234"
+config[:receiver_user_id] = "r0210"
+config[:receiver_user_email] = "fernando.taboada@xapo.com"
+config[:pay_object_id] = "to0210"
+config[:amount_BIT] = 0.01
+config[:pay_type] = PayType::DONATE
 
-config.setAmountBIT("0.01");
-config.setPayObjectId("to0210");
-config.setReceiverUserEmail("jhon.doe@leapsight.com");
-config.setReceiverUserId("r0210");
-config.setSenderUserCellphone("+5491112341234");
-config.setSenderUserEmail("jane.doe@xapo.com");
-config.setSenderUserId("");
-
-// PAY_TYPE_TIP | PAY_TYPE_PAY | PAY_TYPE_DEPOSIT  | PAY_TYPE_DONATE
-config.setPayType(MicroPaymentConfig.PAY_TYPE_TIP);
-
-// Get IFRAME snippet
+# Get IFRAME snippet
 String iframe = microPayment.buildIframeWidget(request);
 ```
 
@@ -80,30 +90,30 @@ With this you get the following snippet:
 See the example results in the [widgets gallery](#widgets-gallery).
 
 ### Div Widget
-```java
-import com.xapo.tools.widgets.MicroPayment;
-import com.xapo.tools.widgets.MicroPaymentConfig;
+```ruby
+require 'xapo_tools'
 
 ...
 
-microPayment = new MicroPayment(XAPO_URL,
-                                APP_ID, APP_SECRET);
+micro_payment = XapoTools::MicroPayment.new(
+            XAPO_URL, 
+            APP_ID, 
+            APP_SECRET)
+config = XapoTools.micro_payment_config
 
-config = new WidgetConfig();
+config[:sender_user_email] = "sender@xapo.com"
+config[:sender_user_cellphone] = "+5491112341234"
+config[:receiver_user_id] = "r0210"
+config[:receiver_user_email] = "fernando.taboada@xapo.com"
+config[:pay_object_id] = "to0210"
+config[:amount_BIT] = 0.01
+config[:pay_type] = PayType::TIP
 
-config.setAmountBIT("0.01");
-config.setPayObjectId("to0210");
-config.setReceiverUserEmail("jhon.doe@leapsight.com");
-config.setReceiverUserId("r0210");
-config.setSenderUserCellphone("+5491112341234");
-config.setSenderUserEmail("jane.doe@xapo.com");
-config.setSenderUserId("");
+# PayType::TIP | PayType::PAY | PayType::DEPOSIT | PayType::DONATE
+config[:pay_type] = PayType::DONATE
 
-// PAY_TYPE_TIP | PAY_TYPE_PAY | PAY_TYPE_DEPOSIT  | PAY_TYPE_DONATE
-config.setPayType(MicroPaymentConfig.PAY_TYPE_DONATE);
-
-// Get IFRAME snippet
-String iframe = microPayment.buildDivWidget(request);
+# Get DIV snippet
+xapo_tools.build_div_widget(config)
 ```
 
 With this you get the following snippet:
