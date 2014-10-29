@@ -135,13 +135,13 @@ See the example results in the [widgets gallery](#widgets-gallery).
 
 ### Widgets Gallery
 
-![payment button](http://developers.xapo.com/content/payment_widget/donate_button.png)
+![payment button](http://developers.xapo.com/images/payment_widget/donate_button.png)
 
-![payment phone](http://developers.xapo.com/content/payment_widget/mpayment1.png)
+![payment phone](http://developers.xapo.com/images/payment_widget/mpayment1.png)
 
-![payment email](http://developers.xapo.com/content/payment_widget/mpayment2.png)
+![payment email](http://developers.xapo.com/images/payment_widget/mpayment2.png)
 
-![payment pin](http://developers.xapo.com/content/payment_widget/mpayment3.png)
+![payment pin](http://developers.xapo.com/images/payment_widget/mpayment3.png)
 
 ## Contributing
 
@@ -154,7 +154,7 @@ See the example results in the [widgets gallery](#widgets-gallery).
 ## TODO
 - ~~Fix style (https://github.com/bbatsov/ruby-style-guide#naming)~~
 - ~~Add unit testing~~
-- Document, document, ~~document~~
+- Document, document, ~~document~
 - ~~Review naming and organization (with respect to Java & Python?)~~
 - Review `gem` build infraestructure
 - ...
