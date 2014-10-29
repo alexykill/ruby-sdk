@@ -4,16 +4,21 @@
 
 ---
 
-# Table of Contents
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Table of Contents 
 
-- [Build](#build)
-- [Installation](#installation)
-- [Micro Payment Widgets](#micro-payment-widgets)
+- [Table of Contents](#table-of-contents)
+  - [Build](#build)
+  - [Installation](#installation)
+  - [Micro Payment Widgets](#micro-payment-widgets)
     - [IFrame Widget](#iframe-widget)
     - [Div Widget](#div-widget)
     - [Widgets Gallery](#widgets-gallery)
-- [Contributing](#contributing)
-- [TODO](#todo) 
+  - [Contributing](#contributing)
+  - [TODO](#todo)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
 ## Build
 
@@ -130,17 +135,17 @@ See the example results in the [widgets gallery](#widgets-gallery).
 
 ### Widgets Gallery
 
-![payment button](https://bitbucket.org/leapsight/xapo.java-sdk/raw/master/img/donate_button.png)
+![payment button](http://developers.xapo.com/content/payment_widget/donate_button.png)
 
-![payment phone](https://bitbucket.org/leapsight/xapo.java-sdk/raw/master/img/mpayment1.png)
+![payment phone](http://developers.xapo.com/content/payment_widget/mpayment1.png)
 
-![payment email](https://bitbucket.org/leapsight/xapo.java-sdk/raw/master/img/mpayment2.png)
+![payment email](http://developers.xapo.com/content/payment_widget/mpayment2.png)
 
-![payment pin](https://bitbucket.org/leapsight/xapo.java-sdk/raw/master/img/mpayment3.png)
+![payment pin](http://developers.xapo.com/content/payment_widget/mpayment3.png)
 
 ## Contributing
 
-1. Fork it ( https://github.com/frepond/xapo_sdk/fork )
+1. Fork it ( https://github.com/xapo/ruby-sdk/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
@@ -149,7 +154,7 @@ See the example results in the [widgets gallery](#widgets-gallery).
 ## TODO
 - ~~Fix style (https://github.com/bbatsov/ruby-style-guide#naming)~~
 - ~~Add unit testing~~
-- Document, document, document
+- Document, document, ~~document~~
 - ~~Review naming and organization (with respect to Java & Python?)~~
-- Review `gem` build infraestructure (http://www.smashingmagazine.com/2014/04/08/how-to-build-a-ruby-gem-with-bundler-test-driven-development-travis-ci-and-coveralls-oh-my/)
+- Review `gem` build infraestructure
 - ...
