@@ -18,7 +18,7 @@ module XapoTools
     end
 
     class MicroPayment
-        def initialize(service_url, app_id, app_secret)
+        def initialize(service_url, app_id=nil, app_secret=nil)
             @service_url = service_url
             @app_id = app_id
             @app_secret = app_secret
@@ -26,12 +26,19 @@ module XapoTools
 
         def build_url(config)
             json_config = JSON.generate(config)
-            encrypted_config = XapoUtils.encrypt(json_config, @app_secret)
+            
+            if @app_secret == nil || @app_id == nil
+                query_str = URI.encode_www_form(
+                    "payload" => json_config,
+                    "customization" => JSON.generate({"button_text" => config[:pay_type]}))
+            else
+                encrypted_config = XapoUtils.encrypt(json_config, @app_secret)
 
-            query_str = URI.encode_www_form(
-                "app_id" => @app_id, 
-                "button_request" => encrypted_config,
-                "customization" => JSON.generate({"button_text" => config[:pay_type]}))
+                query_str = URI.encode_www_form(
+                    "app_id" => @app_id, 
+                    "button_request" => encrypted_config,
+                    "customization" => JSON.generate({"button_text" => config[:pay_type]}))
+            end
 
             widget_url = @service_url + "?" + query_str
 
