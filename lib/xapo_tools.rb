@@ -9,6 +9,25 @@ module XapoTools
 
   module_function 
 
+  # Micro payment button configuration options.
+  #
+  # This function is intended to be a helper for creating empty micro
+  # payments buttons configuration but also serves for documenting. A 
+  # hash with the intended fields would give the same results.
+  #
+  # Attributes:
+  #      sender_user_id (str): The id of the user sending the payment.
+  #      sender_user_email (str, optional): The email of the user sending
+  #          the payment.
+  #      sender_user_cellphone (str, optional): The celphone number of the user
+  #          sending the payment.
+  #      receiver_user_id (str): The id of the user receiving the payment.
+  #      receiver_user_email (str): The email of the user receiving the payment.
+  #      pay_object_id (str): A payment identifier in the TPA context.
+  #      amount_BIT (float, optional): The amount of bitcoins to be payed by the
+  #          widget. If not specified here, it must be entered on payment basis.
+  #      pay_type (str): The string representing the type of operation
+  #          ("Tip", "Pay", "Deposit" or "Donate").
   def micro_payment_config
     return Hash[:sender_user_id => "", :sender_user_email => "", 
                 :sender_user_cellphone => "", :receiver_user_id => "", 
@@ -17,7 +36,17 @@ module XapoTools
                 :pay_type => ""]
   end
 
-  class MicroPayment
+  # Xapo's payment buttons snippet builder.
+  #
+  # This class allows the construction of 2 kind of widgets, *div* and
+  # *iframe*. The result is a HTML snippet that could be embedded in a
+  # web page for doing micro payments though a payment button.
+  #
+  # Attributes:
+  #    service_url: The endpoint URL that returns the payment widget.
+  #    app_id: The id of the TPA for which the widget will be created.
+  #    app_secret: The TPA secret used to encrypt widget configuration.
+  class MicroPayment    
     def initialize(service_url, app_id=nil, app_secret=nil)
       @service_url = service_url
       @app_id = app_id
@@ -47,6 +76,14 @@ module XapoTools
       return widget_url
     end
 
+    # Build an iframe HTML snippet in order to be embedded in apps.
+    #
+    # Args:
+    #   config (MicroPaymentConfig): The button configuration options.
+    #   See @MicroPaymentConfig.
+    #
+    # Returns:
+    #   string: the iframe HTML snippet ot be embedded in a page.
     def build_iframe_widget(config)
       widget_url = build_url(config)
 
@@ -61,6 +98,14 @@ module XapoTools
       return snippet
     end
 
+    # Build div HTML snippet in order to be embedded in apps.
+    #
+    # Args:
+    #   config (MicroPaymentConfig): The button configuration options.
+    #   See @MicroPaymentConfig.
+    #
+    # Returns:
+    #   string: the div HTML snippet ot be embedded in a page.
     def build_div_widget(config)
       widget_url = build_url(config)
 
