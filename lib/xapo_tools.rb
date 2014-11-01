@@ -43,9 +43,9 @@ module XapoTools
   # web page for doing micro payments though a payment button.
   #
   # Attributes:
-  #    service_url: The endpoint URL that returns the payment widget.
-  #    app_id: The id of the TPA for which the widget will be created.
-  #    app_secret: The TPA secret used to encrypt widget configuration.
+  #    service_url (str): The endpoint URL that returns the payment widget.
+  #    app_id (str, optional): The id of the TPA for which the widget will be created.
+  #    app_secret (str, optional): The TPA secret used to encrypt widget configuration.
   class MicroPayment    
     def initialize(service_url, app_id=nil, app_secret=nil)
       @service_url = service_url
