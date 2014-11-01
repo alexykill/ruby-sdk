@@ -158,7 +158,7 @@ See the example results in the [widgets gallery](#widgets-gallery).
 ## TODO
 - ~~Fix style (https://github.com/bbatsov/ruby-style-guide#naming)~~
 - ~~Add unit testing~~
-- Document, document, ~~document~
+- Document, document, ~~document~~
 - ~~Review naming and organization (with respect to Java & Python?)~~
-- Review `gem` build infraestructure
+- ~~Review `gem` build infraestructure~~
 - ...
