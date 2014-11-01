@@ -62,6 +62,8 @@ Micro payment widgets allow to dynamically get a HTML snippet pre-configured and
 - **Pay Object's Id:** `[mandatory]` any unique identifier in the context of the TPA distinguishing the object of the payment.
 - **Pay type:** `[optional]` any of Donate | Pay | Tip | Deposit.
 
+Be aware that micro payments could be optionally configured with your own application id and secret (`app_id`/`app_secret`). Configuring the micro payment with your application credentials allows you to charge a transaction fee for example.
+
 ### IFrame Widget
 ```ruby
 require 'xapo_tools'
@@ -69,9 +71,10 @@ require 'xapo_tools'
 ...
 
 micro_payment = XapoTools::MicroPayment.new(
-            XAPO_URL, 
-            APP_ID, 
-            APP_SECRET)
+                                            XAPO_URL, 
+                                            APP_ID,    # optional
+                                            APP_SECRET # optional
+                                           )
 config = XapoTools.micro_payment_config
 
 config[:sender_user_email] = "sender@xapo.com"
@@ -101,9 +104,10 @@ require 'xapo_tools'
 ...
 
 micro_payment = XapoTools::MicroPayment.new(
-            XAPO_URL, 
-            APP_ID, 
-            APP_SECRET)
+                                            XAPO_URL, 
+                                            APP_ID,     # optional 
+                                            APP_SECRET  # optional
+                                           )
 config = XapoTools.micro_payment_config
 
 config[:sender_user_email] = "sender@xapo.com"
