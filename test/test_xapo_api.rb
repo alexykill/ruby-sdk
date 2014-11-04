@@ -12,7 +12,8 @@ class TestXapoAPI < Minitest::Test
   end
 
   def test_credit()
-    res = @api.credit('sample@xapo.com', 0.5, SecureRandom.hex, 
+    res = @api.credit('sample@xapo.com', 1, SecureRandom.hex, 
+                      currency: Xapo::Currency::SAT,
                       comments: "Sample deposit")
 
     puts("test_credit -> ", res)
