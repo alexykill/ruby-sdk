@@ -22,6 +22,7 @@ class TestXapoUtils < Minitest::Test
             'GB++p7zK4NmOdrGEX9f+EwBjYuyKSsNez7kXPAWzwEvoi1o8gu4bxA1ng=='
 
     actual = XapoUtils.encrypt(json, "bc4e142dc053407b0028accffc289c18").tr("\n","")
+    puts("test_encrypt -> \n", json, actual)
     
     assert_equal(expected, actual)
   end

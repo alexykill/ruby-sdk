@@ -8,17 +8,21 @@
 
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of Contents 
+## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-  - [Build](#build)
-  - [Installation](#installation)
-  - [Micro Payment Widgets](#micro-payment-widgets)
-    - [IFrame Widget](#iframe-widget)
-    - [Div Widget](#div-widget)
-    - [Widgets Gallery](#widgets-gallery)
-  - [Contributing](#contributing)
-  - [TODO](#todo)
+- [Build](#build)
+- [Installation](#installation)
+- [API](#api)
+  - [Credit](#credit)
+    - [Parameters](#parameters)
+    - [Result](#result)
+    - [Usage Example](#usage-example)
+- [Micro Payment Widgets](#micro-payment-widgets)
+  - [IFrame Widget](#iframe-widget)
+  - [Div Widget](#div-widget)
+  - [Widgets Gallery](#widgets-gallery)
+- [Contributing](#contributing)
+- [TODO](#todo)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -51,6 +55,79 @@ And then execute:
 Or install it yourself as:
 
     $ gem install xapo_sdk
+
+## API
+
+The of the API allows third party application to interact with Xapo wallets and resources in a simple and intuitive way.
+
+
+Development Environment:
+
+> http://dev.xapo.com/api/v1
+
+### Credit
+
+The Credit API allows any Third Party Application (TPA) to load Bitcoins into any Xapo Wallet using a secure App_ID + App_Shared_Key authentication method.
+
+#### Parameters
+
+- **To:** ``(string, mandatory)`` any e­mail, BTC address or mobile number.
+- **Currency:** ``(Currency, mandatory)`` any of ``Currency.BTC`` or ``Currency.SAT`` .
+- **Amount:** ``(numeric, mandatory)`` amount to be credited.
+- **Comments:** ``(string, optional)`` note or message to attach to the transaction.
+- **Subject:** ``(string, optional)`` if specified, will be used as email subject (when crediting an email address) or SMS text (when crediting a mobile #). 
+- **Timestamp:** ``(int, mandatory)`` UTC Unix Timestamp. The request will be rejected if using a timestamp not equal or greater than the last used by previous request.
+- **Resquest Id:** ``(string, mandatory)`` any ID that uniquely identifies this request. Cannot be repeated with any new request.    
+
+#### Result
+
+The result is a dictionary containing:
+
+| Key     | Type    | Description |
+|---------| ------- | ----------- |
+| success | boolean | Indicates whether the request was successfully processed or not | 
+| code    | string  | A response |
+| message | string  | Description of the result |
+
+Error codes:
+
+| Code            | Message |
+| --------------- | ------- |
+Success           | Wallet successfully credited |
+InvalidRequest    | Either the App token or Hash are invalid |
+ExpiredRequest    | The request timestamp and/or unique_request_id have expired |
+InvalidWallet     | Wallet not linked with this APP |
+InvalidEmail      | The destination email is invalid |
+InvalidBTCAddress | The destination BTC address is invalid |
+InvalidCellphone  | The destination mobile number is invalid |
+InvalidCurrency   | The currency is invalid |
+InvalidAmount     | The amount to deposit is invalid |
+MinimumAmount     | The amount to deposit must be at least XXX |
+InsufficientFunds | The wallet you are withdrawing from does not have enough available balance to fulfill the Deposit |
+
+
+#### Usage Example
+
+```ruby
+
+    require "xapo_api"
+    require "securerandom"
+
+    ...
+
+    # config the api
+    api = Xapo::API.new(SERVICE_URL, APP_ID, APP_SECRET)
+
+    ...
+
+    # call cerdit service
+    res = api.credit('sample@xapo.com', 0.5, SecureRandom.hex,
+                     currency: Xapo::Currency::BTC, 
+                     comments: "Sample deposit")
+
+    puts(res)
+```
+
 
 ## Micro Payment Widgets
 Micro payment widgets allow to dynamically get a HTML snippet pre-configured and insert into your web page. Micro payment widgets provides 4 kind of pre-configured actions __Pay, Donate, Tip__ and __Deposit__. The widgets allow the following configurations:

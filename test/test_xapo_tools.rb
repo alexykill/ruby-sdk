@@ -24,6 +24,7 @@ class TestXapoTools < Minitest::Test
     config[:pay_type] = PayType::DONATE
 
     actual = @xapo_tools.build_iframe_widget(config)
+    puts("test_build_iframe_widget -> ", actual)
 
     assert_match(/<iframe(.*)button_request(.*)>(.*)<\/iframe>\n/m, actual)
   end
@@ -39,6 +40,7 @@ class TestXapoTools < Minitest::Test
     config[:pay_type] = PayType::DONATE
 
     actual = @xapo_tools_notpa.build_iframe_widget(config)
+    puts("test_build_iframe_widget_notpa -> ", actual)
 
     assert_match(/<iframe(.*)payload(.*)>(.*)<\/iframe>\n/m, actual)
   end
@@ -59,6 +61,7 @@ class TestXapoTools < Minitest::Test
             /mx
 
     actual = @xapo_tools.build_div_widget(config)
+    puts("test_build_div_widget -> ", actual)
 
     assert_match(regex, actual)
   end
@@ -79,6 +82,7 @@ class TestXapoTools < Minitest::Test
             /mx
 
     actual = @xapo_tools_notpa.build_div_widget(config)
+    puts("test_build_div_widget_notpa -> ", actual)
 
     assert_match(regex, actual)
   end

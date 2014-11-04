@@ -29,11 +29,17 @@ module XapoTools
   #      pay_type (str): The string representing the type of operation
   #          ("Tip", "Pay", "Deposit" or "Donate").
   def micro_payment_config
-    return Hash[:sender_user_id => "", :sender_user_email => "", 
-                :sender_user_cellphone => "", :receiver_user_id => "", 
-                :receiver_user_email => "", :pay_object_id => "", 
-                :amount_BIT => 0, :timestamp => XapoUtils.timestamp, 
-                :pay_type => ""]
+    return Hash[
+                :sender_user_id => "", 
+                :sender_user_email => "", 
+                :sender_user_cellphone => "", 
+                :receiver_user_id => "", 
+                :receiver_user_email => "", 
+                :pay_object_id => "", 
+                :amount_BIT => 0, 
+                :timestamp => XapoUtils.timestamp, 
+                :pay_type => ""
+              ]
   end
 
   # Xapo's payment buttons snippet builder.
@@ -58,16 +64,16 @@ module XapoTools
       
       if @app_secret == nil || @app_id == nil
         query_str = URI.encode_www_form(
-          "payload" => json_config,
-          "customization" => JSON.generate({"button_text" => config[:pay_type]})
+          :payload => json_config,
+          :customization => JSON.generate({:button_text => config[:pay_type]})
         )
       else
         encrypted_config = XapoUtils.encrypt(json_config, @app_secret)
 
         query_str = URI.encode_www_form(
-          "app_id" => @app_id, 
-          "button_request" => encrypted_config,
-          "customization" => JSON.generate({"button_text" => config[:pay_type]})
+          :app_id => @app_id, 
+          :button_request => encrypted_config,
+          :customization => JSON.generate({:button_text => config[:pay_type]})
         )
       end
 
