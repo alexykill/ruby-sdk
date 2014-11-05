@@ -4,11 +4,14 @@
 
 ---
 
+[![Gem Version](https://badge.fury.io/rb/xapo_sdk.svg)](http://badge.fury.io/rb/xapo_sdk)
+[![Build Status](https://travis-ci.org/xapo/ruby-sdk.svg?branch=master)](https://travis-ci.org/xapo/ruby-sdk)
+
 [Changelog](CHANGELOG.md)
 
+## Table of Contents
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-## Table of Contents
 
 - [Build](#build)
 - [Installation](#installation)
@@ -71,39 +74,39 @@ The Credit API allows any Third Party Application (TPA) to load Bitcoins into an
 
 #### Parameters
 
-- **To:** ``(string, mandatory)`` any e­mail, BTC address or mobile number.
-- **Currency:** ``(Currency, mandatory)`` any of ``Currency.BTC`` or ``Currency.SAT`` .
-- **Amount:** ``(numeric, mandatory)`` amount to be credited.
-- **Comments:** ``(string, optional)`` note or message to attach to the transaction.
-- **Subject:** ``(string, optional)`` if specified, will be used as email subject (when crediting an email address) or SMS text (when crediting a mobile #). 
-- **Timestamp:** ``(int, mandatory)`` UTC Unix Timestamp. The request will be rejected if using a timestamp not equal or greater than the last used by previous request.
-- **Resquest Id:** ``(string, mandatory)`` any ID that uniquely identifies this request. Cannot be repeated with any new request.    
+- **To:** `(string, mandatory)` any e­mail, BTC address or mobile number.
+- **Currency:** `(Currency, mandatory)` any of `Currency.BTC` or `Currency.SAT`.
+- **Amount:** `(numeric, mandatory)` amount to be credited.
+- **Comments:** `(string, optional)` note or message to attach to the transaction.
+- **Subject:** `(string, optional)` if specified, will be used as email subject (when crediting an email address) or SMS text (when crediting a mobile #). 
+- **Timestamp:** `(int, mandatory)` UTC Unix Timestamp. The request will be rejected if using a timestamp not equal or greater than the last used by previous request.
+- **Resquest Id:** `(string, mandatory)` any ID that uniquely identifies this request. Cannot be repeated with any new request.    
 
 #### Result
 
 The result is a dictionary containing:
 
-| Key     | Type    | Description |
-|---------| ------- | ----------- |
-| success | boolean | Indicates whether the request was successfully processed or not | 
-| code    | string  | A response |
-| message | string  | Description of the result |
+| Key         | Type    | Description |
+| ----------- | ------- | ----------- |
+| `success` | boolean | Indicates whether the request was successfully processed or not | 
+| `code`    | string  | A response code indicating the result |
+| `message` | string  | Description of the result |
 
 Error codes:
 
-| Code            | Message |
-| --------------- | ------- |
-Success           | Wallet successfully credited |
-InvalidRequest    | Either the App token or Hash are invalid |
-ExpiredRequest    | The request timestamp and/or unique_request_id have expired |
-InvalidWallet     | Wallet not linked with this APP |
-InvalidEmail      | The destination email is invalid |
-InvalidBTCAddress | The destination BTC address is invalid |
-InvalidCellphone  | The destination mobile number is invalid |
-InvalidCurrency   | The currency is invalid |
-InvalidAmount     | The amount to deposit is invalid |
-MinimumAmount     | The amount to deposit must be at least XXX |
-InsufficientFunds | The wallet you are withdrawing from does not have enough available balance to fulfill the Deposit |
+| Code              | Message |
+| ----------------- | ------- |
+`Success`           | Wallet successfully credited |
+`InvalidRequest`    | Either the App token or Hash are invalid |
+`ExpiredRequest`    | The request timestamp and/or unique_request_id have expired |
+`InvalidWallet`     | Wallet not linked with this APP |
+`InvalidEmail`      | The destination email is invalid |
+`InvalidBTCAddress` | The destination BTC address is invalid |
+`InvalidCellphone`  | The destination mobile number is invalid |
+`InvalidCurrency`   | The currency is invalid |
+`InvalidAmount`     | The amount to deposit is invalid |
+`MinimumAmount`     | The amount to deposit must be at least XXX |
+`InsufficientFunds` | The wallet you are withdrawing from does not have enough available balance to fulfill the Deposit |
 
 
 #### Usage Example
@@ -171,7 +174,11 @@ String iframe = microPayment.buildIframeWidget(request);
 With this you get the following snippet:
 
 ```html
-<iframe id='tipButtonFrame' scrolling='no' frameborder='0' style='border:none; overflow:hidden; height:22px;' allowTransparency='true' src='http://dev.xapo.com:8089/pay_button/show?customization=%7B%22button_text%22%3A%22Tip%22%7D&app_id=b91014cc28c94841&button_request=C%2F6OaxS0rh3jMhH90kRYyp3y%2BU5ADcCgMLCyz2P5ssFG%2FJoGf55ccvicyRMuIXpU5xhDeHGffpZAvVeMCpJhGFyIPwLFh%2FVdnjnDUjYgJCQeB4mCpGsEW5SC6wNvg69ksgeAtr108Wc5miA8H4JG99EWTTlC7WtIGg5rFKkbjrop15fSJfhv5cTs02jSC5f2BaLlh1mKh5hSPW3HGcWcl%2BdyZj%2F9m1lPB4gKfky2%2FnT0tYjbEFo5aU6WtowWrf2xE8OYejyI0poEFkClBkv2eDkp4Gel4tGb%2Bkwszcyb18ztK89RlBwhe8sX4HeM2KJM8ZaWuDOGH2VW4kbThMCZEw%3D%3D'></iframe>
+<iframe id='tipButtonFrame' scrolling='no' frameborder='0' 
+    style='border:none; overflow:hidden; height:22px;' 
+    allowTransparency='true' 
+    src='http://dev.xapo.com:8089/pay_button/show?customization=%7B%22button_text%22%3A%22Tip%22%7D&app_id=b91014cc28c94841&button_request=C%2F6OaxS0rh3jMhH90kRYyp3y%2BU5ADcCgMLCyz2P5ssFG%2FJoGf55ccvicyRMuIXpU5xhDeHGffpZAvVeMCpJhGFyIPwLFh%2FVdnjnDUjYgJCQeB4mCpGsEW5SC6wNvg69ksgeAtr108Wc5miA8H4JG99EWTTlC7WtIGg5rFKkbjrop15fSJfhv5cTs02jSC5f2BaLlh1mKh5hSPW3HGcWcl%2BdyZj%2F9m1lPB4gKfky2%2FnT0tYjbEFo5aU6WtowWrf2xE8OYejyI0poEFkClBkv2eDkp4Gel4tGb%2Bkwszcyb18ztK89RlBwhe8sX4HeM2KJM8ZaWuDOGH2VW4kbThMCZEw%3D%3D'>
+</iframe>
 ```
 
 See the example results in the [widgets gallery](#widgets-gallery).
@@ -210,7 +217,11 @@ With this you get the following snippet:
 <div id='tipButtonDiv' class='tipButtonDiv'></div>
 <div id='tipButtonPopup' class='tipButtonPopup'></div>
 <script>
-$(document).ready(function() {$('#tipButtonDiv').load('http://dev.xapo.com:8089/pay_button/show?customization=%7B%22button_text%22%3A%22Donate%22%7D&app_id=b91014cc28c94841&button_request=C%2F6OaxS0rh3jMhH90kRYyp3y%2BU5ADcCgMLCyz2P5ssFG%2FJoGf55ccvicyRMuIXpU5xhDeHGffpZAvVeMCpJhGFyIPwLFh%2FVdnjnDUjYgJCQeB4mCpGsEW5SC6wNvg69ksgeAtr108Wc5miA8H4JG99EWTTlC7WtIGg5rFKkbjrop15fSJfhv5cTs02jSC5f2BaLlh1mKh5hSPW3HGcWcl%2BdyZj%2F9m1lPB4gKfky2%2FnT0tYjbEFo5aU6WtowWrf2xE8OYejyI0poEFkClBkv2eDkp4Gel4tGb%2Bkwszcyb18ztK89RlBwhe8sX4HeM2KJMHVfAM8NQXQu8oiIyCAl0vg%3D%3D');});
+$(document).ready(
+  function() {
+    $('#tipButtonDiv').load('http://dev.xapo.com:8089/pay_button/show?customization=%7B%22button_text%22%3A%22Donate%22%7D&app_id=b91014cc28c94841&button_request=C%2F6OaxS0rh3jMhH90kRYyp3y%2BU5ADcCgMLCyz2P5ssFG%2FJoGf55ccvicyRMuIXpU5xhDeHGffpZAvVeMCpJhGFyIPwLFh%2FVdnjnDUjYgJCQeB4mCpGsEW5SC6wNvg69ksgeAtr108Wc5miA8H4JG99EWTTlC7WtIGg5rFKkbjrop15fSJfhv5cTs02jSC5f2BaLlh1mKh5hSPW3HGcWcl%2BdyZj%2F9m1lPB4gKfky2%2FnT0tYjbEFo5aU6WtowWrf2xE8OYejyI0poEFkClBkv2eDkp4Gel4tGb%2Bkwszcyb18ztK89RlBwhe8sX4HeM2KJMHVfAM8NQXQu8oiIyCAl0vg%3D%3D');
+  }
+);
 </script>
 ```
 
@@ -237,7 +248,7 @@ See the example results in the [widgets gallery](#widgets-gallery).
 ## TODO
 - ~~Fix style (https://github.com/bbatsov/ruby-style-guide#naming)~~
 - ~~Add unit testing~~
-- Document, document, ~~document~~
+- Document, ~~document~~, ~~document~~
 - ~~Review naming and organization (with respect to Java & Python?)~~
 - ~~Review `gem` build infraestructure~~
 - ...
