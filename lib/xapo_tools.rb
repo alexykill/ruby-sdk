@@ -18,17 +18,18 @@ module XapoTools
   # Attributes:
   #   sender_user_id (str): The id of the user sending the payment.
   #   sender_user_email (str, optional): The email of the user sending
-  #          the payment.
+  #       the payment.
   #   sender_user_cellphone (str, optional): The celphone number of the user
-  #          sending the payment.
+  #       sending the payment.
   #   receiver_user_id (str): The id of the user receiving the payment.
   #   receiver_user_email (str): The email of the user receiving the payment.
   #   pay_object_id (str): A payment identifier in the TPA context.
   #   amount_BIT (float, optional): The amount of bitcoins to be payed by the
-  #          widget. If not specified here, it must be entered on payment basis.
+  #       widget. If not specified here, it must be entered on payment basis.
   #   pay_type (str): The string representing the type of operation
-  #          ("Tip", "Pay", "Deposit" or "Donate").
-  #   reference_code (str, optional): A custom TAG for the payment.
+  #       ("Tip", "Pay", "Deposit" or "Donate").
+  #   reference_code (str, optional): A custom tag to be tracked by the TPA. It's 
+  #       sent back to the TPA in the specified callback (see customization).
   def micro_payment_config
     return Hash[
                 :sender_user_id => "", 
@@ -52,16 +53,21 @@ module XapoTools
   # hash with the intended fields would give the same results.
   # 
   # Attributes:
+  #     login_cellphone_header_title(str, optional): Text to appear in the login 
+  #         screen. Default: "Support content creators by sending them bits. 
+  #         New users receive 50 bits to get started!"
   #     predefined_pay_values (str, optional): A string of comma separated
   #         amount values, e.g. "1,5,10".
-  #     end_mpayment_uri (str, optional): The URL to notify a successful micro 
-  #         payment.
+  #     end_mpayment_uri (str, optional): The callback URL to notify a successful 
+  #         micro payment. The callback will be called with parameters 
+  #         "reference_code" and "request_UID". 
   #     redirect_uri (str_optional): redirect URL after a successful OAuth flow.
   #         The URL must accept a "code" parameter if access is granted or
   #         "error" and "error_description" in case of denial.   
   #     button_css (str, optional): optional CSS button customization.
   def micro_payment_customization
     return Hash[
+                :login_cellphone_header_title => "",
                 :predefined_pay_values => "", 
                 :end_mpayment_uri => "",
                 :redirect_uri => "",
