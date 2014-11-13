@@ -15,20 +15,20 @@ module XapoTools
   # payments buttons configuration but also serves for documenting. A 
   # hash with the intended fields would give the same results.
   #
-  # Attributes:
-  #   sender_user_id (str): The id of the user sending the payment.
-  #   sender_user_email (str, optional): The email of the user sending
+  # Params:
+  #   +sender_user_id+ (str): The id of the user sending the payment.
+  #   +sender_user_email+ (str, optional): The email of the user sending
   #       the payment.
-  #   sender_user_cellphone (str, optional): The celphone number of the user
+  #   +sender_user_cellphone+ (str, optional): The celphone number of the user
   #       sending the payment.
-  #   receiver_user_id (str): The id of the user receiving the payment.
-  #   receiver_user_email (str): The email of the user receiving the payment.
-  #   pay_object_id (str): A payment identifier in the TPA context.
-  #   amount_BIT (float, optional): The amount of bitcoins to be payed by the
+  #   +receiver_user_id+ (str): The id of the user receiving the payment.
+  #   +receiver_user_email+ (str): The email of the user receiving the payment.
+  #   +pay_object_id+ (str): A payment identifier in the TPA context.
+  #   +amount_BIT+ (float, optional): The amount of bitcoins to be payed by the
   #       widget. If not specified here, it must be entered on payment basis.
-  #   pay_type (str): The string representing the type of operation
+  #   +pay_type+ (str): The string representing the type of operation
   #       ("Tip", "Pay", "Deposit" or "Donate").
-  #   reference_code (str, optional): A custom tag to be tracked by the TPA. It's 
+  #   +reference_code+ (str, optional): A custom tag to be tracked by the TPA. It's 
   #       sent back to the TPA in the specified callback (see customization).
   def micro_payment_config
     return Hash[
@@ -52,19 +52,19 @@ module XapoTools
   # payments buttons customization but also serves for documenting. A 
   # hash with the intended fields would give the same results.
   # 
-  # Attributes:
-  #     login_cellphone_header_title(str, optional): Text to appear in the login 
+  # Params:
+  #     +login_cellphone_header_title+ (str, optional): Text to appear in the login 
   #         screen. Default: "Support content creators by sending them bits. 
   #         New users receive 50 bits to get started!"
-  #     predefined_pay_values (str, optional): A string of comma separated
+  #     +predefined_pay_values+ (str, optional): A string of comma separated
   #         amount values, e.g. "1,5,10".
-  #     end_mpayment_uri (str, optional): The callback URL to notify a successful 
+  #     +end_mpayment_uri+ (str, optional): The callback URL to notify a successful 
   #         micro payment. The callback will be called with parameters 
   #         "reference_code" and "request_UID". 
-  #     redirect_uri (str_optional): redirect URL after a successful OAuth flow.
+  #     +redirect_uri+ (str_optional): redirect URL after a successful OAuth flow.
   #         The URL must accept a "code" parameter if access is granted or
   #         "error" and "error_description" in case of denial.   
-  #     button_css (str, optional): optional CSS button customization.
+  #     +button_css+ (str, optional): optional CSS button customization.
   def micro_payment_customization
     return Hash[
                 :login_cellphone_header_title => "",
@@ -81,10 +81,10 @@ module XapoTools
   # *iframe*. The result is a HTML snippet that could be embedded in a
   # web page for doing micro payments though a payment button.
   #
-  # Attributes:
-  #    service_url (str): The endpoint URL that returns the payment widget.
-  #    app_id (str, optional): The id of the TPA for which the widget will be created.
-  #    app_secret (str, optional): The TPA secret used to encrypt widget configuration.
+  # Params:
+  #    +service_url+ (str): The endpoint URL that returns the payment widget.
+  #    +app_id+ (str, optional): The id of the TPA for which the widget will be created.
+  #    +app_secret+ (str, optional): The TPA secret used to encrypt widget configuration.
   class MicroPayment    
     def initialize(service_url, app_id=nil, app_secret=nil)
       @service_url = service_url
@@ -117,9 +117,9 @@ module XapoTools
 
     # Build an iframe HTML snippet in order to be embedded in apps.
     #
-    # Args:
-    #   config (MicroPaymentConfig): The button configuration options.
-    #   See @MicroPaymentConfig.
+    # Params:
+    #   +config+ (+Hash+): The button configuration options.
+    #   See @micro_payment_config.
     #
     # Returns:
     #   string: the iframe HTML snippet ot be embedded in a page.
@@ -139,9 +139,9 @@ module XapoTools
 
     # Build div HTML snippet in order to be embedded in apps.
     #
-    # Args:
-    #   config (MicroPaymentConfig): The button configuration options.
-    #   See @MicroPaymentConfig.
+    # Params:
+    #   +config+ (+Hash+): The button configuration options.
+    #   See @micro_payment_config.
     #
     # Returns:
     #   string: the div HTML snippet ot be embedded in a page.
@@ -171,4 +171,5 @@ module PayType
   DONATE = "Donate"
   PAY = "Pay"
   DEPOSIT = "Deposit"
+  OAUTH = "Oauth"
 end

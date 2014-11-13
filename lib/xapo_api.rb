@@ -5,14 +5,6 @@ require "json"
 require "uri"
 require "net/http"
 
-# Xapo's API.
-#
-# This class allows the interaction with bitcoins APIs provided with Xapo.
-#
-# Attributes:
-#    service_url (str): The endpoint URL that returns the payment widget.
-#    app_id (str, optional): The id of the TPA for which the widget will be created.
-#    app_secret (str, optional): The TPA secret used to encrypt widget configuration.
 module Xapo
 
   module_function
@@ -22,6 +14,14 @@ module Xapo
     SAT = "SAT"
   end
   
+  # Xapo's API.
+  #
+  # This class allows the interaction with bitcoins APIs provided with Xapo.
+  #
+  # Params:
+  #    +service_url+ (str): The endpoint URL that returns the payment widget.
+  #    +app_id+ (str): The id of the TPA doing the credit.
+  #    +app_secret+ (str): The TPA secret used to encrypt payload.
   class API    
     def initialize(service_url, app_id, app_secret)
       @service_url = service_url
@@ -30,6 +30,12 @@ module Xapo
       @credit_resource = '/credit/'
     end
 
+    # Transfer a given amount from the main wallet of the TPA to a given sub account.
+    #
+    # Params:
+    #     +to+ (str): the destination of the credit.
+    #     +amount+ (decimal): the amount to be credited.
+    #     +currency+ (Xapo::Currency): the currency of the operation (SAT|BTC).
     def credit(to, amount, request_id, currency: Xapo::Currency::BTC, 
                comments: "", subject: "")
       timestamp = XapoUtils.timestamp
