@@ -22,8 +22,15 @@ class TestXapoTools < Minitest::Test
     config[:pay_object_id] = "to0210"
     config[:amount_BIT] = 0.01
     config[:pay_type] = PayType::DONATE
+    config[:reference_code] = "test"
 
-    actual = @xapo_tools.build_iframe_widget(config)
+    customization = XapoTools.micro_payment_customization
+    customization[:predefined_pay_values] = "1,5,10"
+    customization[:end_mpayment_uri] = "http://localhost:9000"
+    customization[:redirect_uri] = "http://localhost:9000"
+    customization[:button_css] = "grey"
+
+    actual = @xapo_tools.build_iframe_widget(config, customization)
     puts("test_build_iframe_widget -> ", actual)
 
     assert_match(/<iframe(.*)button_request(.*)>(.*)<\/iframe>\n/m, actual)
@@ -38,8 +45,15 @@ class TestXapoTools < Minitest::Test
     config[:pay_object_id] = "to0210"
     config[:amount_BIT] = 0.01
     config[:pay_type] = PayType::DONATE
+    config[:reference_code] = "test"
 
-    actual = @xapo_tools_notpa.build_iframe_widget(config)
+    customization = XapoTools.micro_payment_customization
+    customization[:predefined_pay_values] = "1,5,10"
+    customization[:end_mpayment_uri] = "http://localhost:9000"
+    customization[:redirect_uri] = "http://localhost:9000"
+    customization[:button_css] = "red"
+
+    actual = @xapo_tools_notpa.build_iframe_widget(config, customization)
     puts("test_build_iframe_widget_notpa -> ", actual)
 
     assert_match(/<iframe(.*)payload(.*)>(.*)<\/iframe>\n/m, actual)
@@ -54,13 +68,21 @@ class TestXapoTools < Minitest::Test
     config[:pay_object_id] = "to0210"
     config[:amount_BIT] = 0.01
     config[:pay_type] = PayType::TIP
+    config[:reference_code] = "test"
+
+    customization = XapoTools.micro_payment_customization
+    customization[:predefined_pay_values] = "1,5,10"
+    customization[:end_mpayment_uri] = "http://localhost:9000"
+    customization[:redirect_uri] = "http://localhost:9000"
+    customization[:button_css] = "grey"
+
     regex = /
                 <div\sid="tipButtonDiv"\sclass="tipButtonDiv"><\/div>\n
                 <div\sid="tipButtonPopup"\sclass="tipButtonPopup"><\/div>\n
                 <script>(.*)button_request(.*)<\/script>\n
             /mx
 
-    actual = @xapo_tools.build_div_widget(config)
+    actual = @xapo_tools.build_div_widget(config, customization)
     puts("test_build_div_widget -> ", actual)
 
     assert_match(regex, actual)
@@ -75,13 +97,21 @@ class TestXapoTools < Minitest::Test
     config[:pay_object_id] = "to0210"
     config[:amount_BIT] = 0.01
     config[:pay_type] = PayType::TIP
+    config[:reference_code] = "test"
+
+    customization = XapoTools.micro_payment_customization
+    customization[:predefined_pay_values] = "1,5,10"
+    customization[:end_mpayment_uri] = "http://localhost:9000"
+    customization[:redirect_uri] = "http://localhost:9000"
+    customization[:button_css] = "red"
+
     regex = /
                 <div\sid="tipButtonDiv"\sclass="tipButtonDiv"><\/div>\n
                 <div\sid="tipButtonPopup"\sclass="tipButtonPopup"><\/div>\n
                 <script>(.*)payload(.*)<\/script>\n
             /mx
 
-    actual = @xapo_tools_notpa.build_div_widget(config)
+    actual = @xapo_tools_notpa.build_div_widget(config, customization)
     puts("test_build_div_widget_notpa -> ", actual)
 
     assert_match(regex, actual)

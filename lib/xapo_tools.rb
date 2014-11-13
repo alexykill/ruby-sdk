@@ -16,18 +16,19 @@ module XapoTools
   # hash with the intended fields would give the same results.
   #
   # Attributes:
-  #      sender_user_id (str): The id of the user sending the payment.
-  #      sender_user_email (str, optional): The email of the user sending
+  #   sender_user_id (str): The id of the user sending the payment.
+  #   sender_user_email (str, optional): The email of the user sending
   #          the payment.
-  #      sender_user_cellphone (str, optional): The celphone number of the user
+  #   sender_user_cellphone (str, optional): The celphone number of the user
   #          sending the payment.
-  #      receiver_user_id (str): The id of the user receiving the payment.
-  #      receiver_user_email (str): The email of the user receiving the payment.
-  #      pay_object_id (str): A payment identifier in the TPA context.
-  #      amount_BIT (float, optional): The amount of bitcoins to be payed by the
+  #   receiver_user_id (str): The id of the user receiving the payment.
+  #   receiver_user_email (str): The email of the user receiving the payment.
+  #   pay_object_id (str): A payment identifier in the TPA context.
+  #   amount_BIT (float, optional): The amount of bitcoins to be payed by the
   #          widget. If not specified here, it must be entered on payment basis.
-  #      pay_type (str): The string representing the type of operation
+  #   pay_type (str): The string representing the type of operation
   #          ("Tip", "Pay", "Deposit" or "Donate").
+  #   reference_code (str, optional): A custom TAG for the payment.
   def micro_payment_config
     return Hash[
                 :sender_user_id => "", 
@@ -38,7 +39,33 @@ module XapoTools
                 :pay_object_id => "", 
                 :amount_BIT => 0, 
                 :timestamp => XapoUtils.timestamp, 
-                :pay_type => ""
+                :pay_type => "",
+                :reference_code => ""
+              ]
+  end
+
+
+  # Micro payment button customization options.
+  #
+  # This function is intended to be a helper for creating empty micro
+  # payments buttons customization but also serves for documenting. A 
+  # hash with the intended fields would give the same results.
+  # 
+  # Attributes:
+  #     predefined_pay_values (str, optional): A string of comma separated
+  #         amount values, e.g. "1,5,10".
+  #     end_mpayment_uri (str, optional): The URL to notify a successful micro 
+  #         payment.
+  #     redirect_uri (str_optional): redirect URL after a successful OAuth flow.
+  #         The URL must accept a "code" parameter if access is granted or
+  #         "error" and "error_description" in case of denial.   
+  #     button_css (str, optional): optional CSS button customization.
+  def micro_payment_customization
+    return Hash[
+                :predefined_pay_values => "", 
+                :end_mpayment_uri => "",
+                :redirect_uri => "",
+                :button_css => "" 
               ]
   end
 
@@ -59,13 +86,13 @@ module XapoTools
       @app_secret = app_secret
     end
 
-    def build_url(config)
-      json_config = JSON.generate(config)
+    def build_url(config, customization)
+      json_config = JSON.generate(config, customization)
       
       if @app_secret == nil || @app_id == nil
         query_str = URI.encode_www_form(
           :payload => json_config,
-          :customization => JSON.generate({:button_text => config[:pay_type]})
+          :customization => JSON.generate(customization)
         )
       else
         encrypted_config = XapoUtils.encrypt(json_config, @app_secret)
@@ -73,7 +100,7 @@ module XapoTools
         query_str = URI.encode_www_form(
           :app_id => @app_id, 
           :button_request => encrypted_config,
-          :customization => JSON.generate({:button_text => config[:pay_type]})
+          :customization => JSON.generate(customization)
         )
       end
 
@@ -90,8 +117,8 @@ module XapoTools
     #
     # Returns:
     #   string: the iframe HTML snippet ot be embedded in a page.
-    def build_iframe_widget(config)
-      widget_url = build_url(config)
+    def build_iframe_widget(config, customization)
+      widget_url = build_url(config, customization)
 
       snippet = YAML::load(<<-END)
       |
@@ -112,8 +139,8 @@ module XapoTools
     #
     # Returns:
     #   string: the div HTML snippet ot be embedded in a page.
-    def build_div_widget(config)
-      widget_url = build_url(config)
+    def build_div_widget(config, customization)
+      widget_url = build_url(config, customization)
 
       snippet = YAML::load(<<-END)
       |
