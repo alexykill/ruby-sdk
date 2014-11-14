@@ -59,6 +59,23 @@ class TestXapoTools < Minitest::Test
     assert_match(/<iframe(.*)payload(.*)>(.*)<\/iframe>\n/m, actual)
   end
 
+  def test_build_iframe_widget_np_cust()
+    config = XapoTools.micro_payment_config
+    config[:sender_user_email] = "sender@xapo.com"
+    config[:sender_user_cellphone] = "+5491112341234"
+    config[:receiver_user_id] = "r0210"
+    config[:receiver_user_email] = "fernando.taboada@xapo.com"
+    config[:pay_object_id] = "to0210"
+    config[:amount_BIT] = 0.01
+    config[:pay_type] = PayType::DONATE
+    config[:reference_code] = "test"
+
+    actual = @xapo_tools.build_iframe_widget(config)
+    puts("test_build_iframe_widget -> ", actual)
+
+    assert_match(/<iframe(.*)button_request(.*)>(.*)<\/iframe>\n/m, actual)
+  end
+
   def test_build_div_widget()
     config = XapoTools.micro_payment_config
     config[:sender_user_email] = "sender@xapo.com"
@@ -112,6 +129,29 @@ class TestXapoTools < Minitest::Test
             /mx
 
     actual = @xapo_tools_notpa.build_div_widget(config, customization)
+    puts("test_build_div_widget_notpa -> ", actual)
+
+    assert_match(regex, actual)
+  end
+
+  def test_build_div_widget_cust()
+    config = XapoTools.micro_payment_config
+    config[:sender_user_email] = "sender@xapo.com"
+    config[:sender_user_cellphone] = "+5491112341234"
+    config[:receiver_user_id] = "r0210"
+    config[:receiver_user_email] = "fernando.taboada@xapo.com"
+    config[:pay_object_id] = "to0210"
+    config[:amount_BIT] = 0.01
+    config[:pay_type] = PayType::TIP
+    config[:reference_code] = "test"
+
+    regex = /
+                <div\sid="tipButtonDiv"\sclass="tipButtonDiv"><\/div>\n
+                <div\sid="tipButtonPopup"\sclass="tipButtonPopup"><\/div>\n
+                <script>(.*)payload(.*)<\/script>\n
+            /mx
+
+    actual = @xapo_tools_notpa.build_div_widget(config)
     puts("test_build_div_widget_notpa -> ", actual)
 
     assert_match(regex, actual)

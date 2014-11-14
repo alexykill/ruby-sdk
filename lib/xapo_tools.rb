@@ -18,18 +18,26 @@ module XapoTools
   # Params:
   #   +sender_user_id+ (str): The id of the user sending the payment.
   #   +sender_user_email+ (str, optional): The email of the user sending
-  #       the payment.
+  #     the payment.
   #   +sender_user_cellphone+ (str, optional): The celphone number of the user
-  #       sending the payment.
+  #     sending the payment.
   #   +receiver_user_id+ (str): The id of the user receiving the payment.
   #   +receiver_user_email+ (str): The email of the user receiving the payment.
   #   +pay_object_id+ (str): A payment identifier in the TPA context.
   #   +amount_BIT+ (float, optional): The amount of bitcoins to be payed by the
-  #       widget. If not specified here, it must be entered on payment basis.
+  #     widget. If not specified here, it must be entered on payment basis.
   #   +pay_type+ (str): The string representing the type of operation
-  #       ("Tip", "Pay", "Deposit" or "Donate").
+  #     ("Tip", "Pay", "Deposit" or "Donate").
   #   +reference_code+ (str, optional): A custom tag to be tracked by the TPA. It's 
-  #       sent back to the TPA in the specified callback (see customization).
+  #     sent back to the TPA in the specified callback (see customization).
+  #   +end_mpayment_uri+ (str, optional): The callback URL to notify a successful 
+  #     micro payment. The callback will be called with parameters 
+  #     "reference_code" and "request_UID".
+  #   +end_mpayment_redirect_uri+ (str, optional): An URL to be redirected to after
+  #     a successful micro payment.
+  #   +redirect_uri+ (str, optional): redirect URL after a successful OAuth flow.
+  #     The URL must accept a "code" parameter if access is granted or
+  #     "error" and "error_description" in case of denial.
   def micro_payment_config
     return Hash[
                 :sender_user_id => "", 
@@ -41,7 +49,10 @@ module XapoTools
                 :amount_BIT => 0, 
                 :timestamp => XapoUtils.timestamp, 
                 :pay_type => "",
-                :reference_code => ""
+                :reference_code => "",
+                :end_mpayment_uri => "",
+                :end_mpayment_redirect_uri => "",
+                :redirect_uri => ""
               ]
   end
 
@@ -53,24 +64,16 @@ module XapoTools
   # hash with the intended fields would give the same results.
   # 
   # Params:
-  #     +login_cellphone_header_title+ (str, optional): Text to appear in the login 
-  #         screen. Default: "Support content creators by sending them bits. 
-  #         New users receive 50 bits to get started!"
-  #     +predefined_pay_values+ (str, optional): A string of comma separated
-  #         amount values, e.g. "1,5,10".
-  #     +end_mpayment_uri+ (str, optional): The callback URL to notify a successful 
-  #         micro payment. The callback will be called with parameters 
-  #         "reference_code" and "request_UID". 
-  #     +redirect_uri+ (str_optional): redirect URL after a successful OAuth flow.
-  #         The URL must accept a "code" parameter if access is granted or
-  #         "error" and "error_description" in case of denial.   
-  #     +button_css+ (str, optional): optional CSS button customization.
+  #   +login_cellphone_header_title+ (str, optional): Text to appear in the login 
+  #     screen. Default: "Support content creators by sending them bits. 
+  #     New users receive 50 bits to get started!"
+  #   +predefined_pay_values+ (str, optional): A string of comma separated
+  #     amount values, e.g. "1,5,10".
+  #   +button_css+ (str, optional): optional CSS button customization ("red" | "grey").
   def micro_payment_customization
     return Hash[
                 :login_cellphone_header_title => "",
                 :predefined_pay_values => "", 
-                :end_mpayment_uri => "",
-                :redirect_uri => "",
                 :button_css => "" 
               ]
   end
@@ -82,9 +85,9 @@ module XapoTools
   # web page for doing micro payments though a payment button.
   #
   # Params:
-  #    +service_url+ (str): The endpoint URL that returns the payment widget.
-  #    +app_id+ (str, optional): The id of the TPA for which the widget will be created.
-  #    +app_secret+ (str, optional): The TPA secret used to encrypt widget configuration.
+  #   +service_url+ (str): The endpoint URL that returns the payment widget.
+  #   +app_id+ (str, optional): The id of the TPA for which the widget will be created.
+  #   +app_secret+ (str, optional): The TPA secret used to encrypt widget configuration.
   class MicroPayment    
     def initialize(service_url, app_id=nil, app_secret=nil)
       @service_url = service_url
@@ -123,7 +126,7 @@ module XapoTools
     #
     # Returns:
     #   string: the iframe HTML snippet ot be embedded in a page.
-    def build_iframe_widget(config, customization)
+    def build_iframe_widget(config, customization=XapoTools::micro_payment_customization)
       widget_url = build_url(config, customization)
 
       snippet = YAML::load(<<-END)
@@ -145,7 +148,7 @@ module XapoTools
     #
     # Returns:
     #   string: the div HTML snippet ot be embedded in a page.
-    def build_div_widget(config, customization)
+    def build_div_widget(config, customization=XapoTools::micro_payment_customization)
       widget_url = build_url(config, customization)
 
       snippet = YAML::load(<<-END)
