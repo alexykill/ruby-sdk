@@ -4,12 +4,12 @@ require "xapo_tools"
 class TestXapoTools < Minitest::Test
   def setup     
     @xapo_tools = XapoTools::MicroPayment.new(
-      "http://dev.xapo.com:8089/pay_button/show", 
+      "https://mpayment.xapo.com/pay_button/show", 
       "b91014cc28c94841", 
       "c533a6e606fb62ccb13e8baf8a95cbdc"
     )
     @xapo_tools_notpa = XapoTools::MicroPayment.new(
-      "http://dev.xapo.com:8089/pay_button/show"
+      "https://mpayment.xapo.com/pay_button/show"
     )
   end
 
