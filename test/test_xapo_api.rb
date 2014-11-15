@@ -5,7 +5,7 @@ require "securerandom"
 class TestXapoAPI < Minitest::Test
   def setup     
     @api = Xapo::API.new(
-      "http://dev.xapo.com/api/v1", 
+      "https://api.xapo.com/v1", 
       "your app id", 
       "your app secret"
     )
