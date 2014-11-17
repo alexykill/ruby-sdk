@@ -97,7 +97,7 @@ module XapoTools
     end
 
     def build_url(config, customization)
-      json_config = JSON.generate(config, customization)
+      json_config = JSON.generate(config)
       
       if @app_secret == nil || @app_id == nil
         query_str = URI.encode_www_form(
