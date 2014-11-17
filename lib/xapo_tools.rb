@@ -28,8 +28,9 @@ module XapoTools
   #     widget. If not specified here, it must be entered on payment basis.
   #   +pay_type+ (str): The string representing the type of operation
   #     ("Tip", "Pay", "Deposit" or "Donate").
-  #   +reference_code+ (str, optional): A custom tag to be tracked by the TPA. It's 
-  #     sent back to the TPA in the specified callback (see customization).
+  #   +reference_code+ (str, optional): A custom code to be tracked by the TPA. It's 
+  #     sent back to the TPA in the specified callback. It could be used also to search 
+  #     with the micro payments query API.
   #   +end_mpayment_uri+ (str, optional): The callback URL to notify a successful 
   #     micro payment. The callback will be called with parameters 
   #     "reference_code" and "request_UID".
