@@ -14,6 +14,9 @@ class TestXapoTools < Minitest::Test
   end
 
   def test_build_iframe_widget()
+    # TODO: remove skip
+    skip("Set app id and secret and remove this line")
+
     config = XapoTools.micro_payment_config
     config[:sender_user_email] = "sender@xapo.com"
     config[:sender_user_cellphone] = "+5491112341234"
@@ -38,6 +41,9 @@ class TestXapoTools < Minitest::Test
   end
 
   def test_build_iframe_widget_notpa()
+    # TODO: remove skip
+    skip("Set app id and secret and remove this line")
+
     config = XapoTools.micro_payment_config
     config[:sender_user_email] = "sender@xapo.com"
     config[:sender_user_cellphone] = "+5491112341234"
@@ -61,31 +67,10 @@ class TestXapoTools < Minitest::Test
     assert_match(/<iframe(.*)payload(.*)>(.*)<\/iframe>\n/m, actual)
   end
 
-  def test_build_iframe_widget_np_cust()
-    config = XapoTools.micro_payment_config
-    config[:sender_user_email] = "sender@xapo.com"
-    config[:sender_user_cellphone] = "+5491112341234"
-    config[:receiver_user_id] = "r0210"
-    config[:receiver_user_email] = "fernando.taboada@xapo.com"
-    config[:pay_object_id] = "to0210"
-    config[:amount_BIT] = 0.01
-    config[:pay_type] = PayType::DONATE
-    config[:reference_code] = "test"
-    config[:end_mpayment_uri] = "http://localhost:9000"
-    config[:redirect_uri] = "http://localhost:9000"
-
-    customization = XapoTools.micro_payment_customization
-    customization[:predefined_pay_values] = "1,5,10"
-    customization[:login_cellphone_header_title] = "Test MicroPayment"
-    customization[:button_css] = "grey"
-
-    actual = @xapo_tools.build_iframe_widget(config)
-    puts("test_build_iframe_widget -> ", actual)
-
-    assert_match(/<iframe(.*)button_request(.*)>(.*)<\/iframe>\n/m, actual)
-  end
-
   def test_build_div_widget()
+    # TODO: remove skip
+    skip("Set app id and secret and remove this line")
+
     config = XapoTools.micro_payment_config
     config[:sender_user_email] = "sender@xapo.com"
     config[:sender_user_cellphone] = "+5491112341234"
@@ -116,6 +101,9 @@ class TestXapoTools < Minitest::Test
   end
 
   def test_build_div_widget_notpa()
+    # TODO: remove skip
+    skip("Set app id and secret and remove this line")
+
     config = XapoTools.micro_payment_config
     config[:sender_user_email] = "sender@xapo.com"
     config[:sender_user_cellphone] = "+5491112341234"
