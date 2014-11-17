@@ -27,7 +27,7 @@ module XapoTools
   #   +amount_BIT+ (float, optional): The amount of bitcoins to be payed by the
   #     widget. If not specified here, it must be entered on payment basis.
   #   +pay_type+ (str): The string representing the type of operation
-  #     ("Tip", "Pay", "Deposit" or "Donate").
+  #     ("Tip", "Pay", "Deposit", "Donate" or OAuth).
   #   +reference_code+ (str, optional): A custom code to be tracked by the TPA. It's 
   #     sent back to the TPA in the specified callback. It could be used also to search 
   #     with the micro payments query API.
@@ -36,7 +36,7 @@ module XapoTools
   #     "reference_code" and "request_UID".
   #   +end_mpayment_redirect_uri+ (str, optional): An URL to be redirected to after
   #     a successful micro payment.
-  #   +redirect_uri+ (str, optional): redirect URL after a successful OAuth flow.
+  #   +redirect_uri+ (str, optional): Redirect URL after a successful OAuth flow.
   #     The URL must accept a "code" parameter if access is granted or
   #     "error" and "error_description" in case of denial.
   def micro_payment_config

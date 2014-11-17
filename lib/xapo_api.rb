@@ -35,6 +35,7 @@ module Xapo
     # Params:
     #     +to+ (str): the destination of the credit.
     #     +amount+ (decimal): the amount to be credited.
+    #     +requestId+ (str): a unique identifier for the credit operation.
     #     +currency+ (Xapo::Currency): the currency of the operation (SAT|BTC).
     def credit(to, amount, request_id, currency: Xapo::Currency::BTC, 
                comments: "", subject: "")
